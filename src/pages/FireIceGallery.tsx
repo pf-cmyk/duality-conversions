@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import heroImage from "@/assets/fire-ice-hero.jpg";
 import miguelSilhouette from "@/assets/miguel-silhouette.jpg";
 import { Flame, Snowflake, Zap, Shield, Clock, TrendingUp, Users, Star, Timer, Award, CheckCircle } from "lucide-react";
@@ -10,6 +12,8 @@ import { Flame, Snowflake, Zap, Shield, Clock, TrendingUp, Users, Star, Timer, A
 const FireIceGallery = () => {
   const [currentMode, setCurrentMode] = useState<'fire' | 'ice' | null>(null);
   const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); // 24 hours in seconds
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   // Dynamic content based on mode
   const getCaption = () => {
@@ -45,6 +49,30 @@ const FireIceGallery = () => {
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleCheckout = async (mode: 'fire' | 'ice') => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: { mode }
+      });
+
+      if (error) throw error;
+
+      if (data.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      toast({
+        title: "Payment Error",
+        description: "There was an issue starting the checkout process. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const testimonials = [
@@ -239,11 +267,23 @@ const FireIceGallery = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="fire" size="lg" className="pulse font-semibold">
-                        🔥 Deploy With Urgency
+                      <Button 
+                        variant="fire" 
+                        size="lg" 
+                        className="pulse font-semibold"
+                        onClick={() => handleCheckout('fire')}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Processing...' : '🔥 Deploy With Urgency'}
                       </Button>
-                      <Button variant="fire-outline" size="lg" className="font-semibold">
-                        Claim the Heat • A$297
+                      <Button 
+                        variant="fire-outline" 
+                        size="lg" 
+                        className="font-semibold"
+                        onClick={() => handleCheckout('fire')}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Processing...' : 'Claim the Heat • A$297'}
                       </Button>
                     </div>
                   </div>
@@ -378,11 +418,23 @@ const FireIceGallery = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="ice" size="lg" className="font-semibold">
-                        ❄️ Deploy With Clarity
+                      <Button 
+                        variant="ice" 
+                        size="lg" 
+                        className="font-semibold"
+                        onClick={() => handleCheckout('ice')}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Processing...' : '❄️ Deploy With Clarity'}
                       </Button>
-                      <Button variant="ice-outline" size="lg" className="font-semibold">
-                        Enter the Sanctuary • A$297
+                      <Button 
+                        variant="ice-outline" 
+                        size="lg" 
+                        className="font-semibold"
+                        onClick={() => handleCheckout('ice')}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Processing...' : 'Enter the Sanctuary • A$297'}
                       </Button>
                     </div>
                   </div>
@@ -609,14 +661,16 @@ const FireIceGallery = () => {
                   "Miguel carved this relic in silence. Every scroll is a whisper of trust."
                 </div>
                 <div 
-                  onClick={() => setCurrentMode('ice')}
+                  onClick={() => handleCheckout('ice')}
                   className={`inline-block cursor-pointer font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 opacity-80 hover:opacity-100 ${
+                    isLoading ? 'opacity-50 pointer-events-none' : ''
+                  } ${
                     currentMode === 'ice' 
                       ? 'bg-white text-ice-secondary shadow-[0_0_20px_rgba(59,130,246,0.4)]' 
                       : 'bg-white text-ice-secondary shadow-[0_0_15px_rgba(59,130,246,0.3)]'
                   }`}
                 >
-                  Deploy With Clarity
+                  {isLoading ? 'Processing...' : 'Deploy With Clarity'}
                 </div>
               </div>
             </div>
@@ -635,14 +689,16 @@ const FireIceGallery = () => {
                   "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
                 </div>
                 <div 
-                  onClick={() => setCurrentMode('fire')}
+                  onClick={() => handleCheckout('fire')}
                   className={`inline-block cursor-pointer font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 opacity-80 hover:opacity-100 ${
+                    isLoading ? 'opacity-50 pointer-events-none' : ''
+                  } ${
                     currentMode === 'fire'
                       ? 'bg-fire-secondary text-fire-surface shadow-[0_0_20px_rgba(249,115,22,0.4)]'
                       : 'bg-fire-secondary text-fire-surface shadow-[0_0_15px_rgba(249,115,22,0.3)]'
                   }`}
                 >
-                  Deploy With Urgency
+                  {isLoading ? 'Processing...' : 'Deploy With Urgency'}
                 </div>
               </div>
             </div>
