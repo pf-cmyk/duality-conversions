@@ -543,74 +543,105 @@ const FireIceGallery = () => {
         </div>
       </section>
 
-      {/* Final CTA Section: Claim the Gallery */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-r from-fire/5 via-transparent to-ice/5" />
-        <div className="absolute left-1/4 top-0 w-96 h-96 bg-fire/10 rounded-full blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 w-96 h-96 bg-ice/10 rounded-full blur-3xl" />
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge variant="outline" className="mb-8 text-lg px-6 py-3 bg-card/50 backdrop-blur-sm">
-              The Ceremonial Chamber
-            </Badge>
+      {/* Final CTA Section - Fire & Ice Dual Blocks */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-6 text-center relative z-10">
+          {/* Miguel's Final Wisdom */}
+          <div className="mb-16">
+            <img 
+              src={miguelSilhouette} 
+              alt="Miguel at the crossroads of fire and ice"
+              className="mx-auto w-24 h-32 object-cover rounded-lg shadow-premium opacity-60 mb-8 animate-float"
+            />
             
-            <h2 className="font-quote text-4xl md:text-6xl font-bold mb-8">
-              This is not a purchase.{" "}
-              <span className="bg-gradient-to-r from-fire to-ice bg-clip-text text-transparent">
-                It's an initiation into mastery.
-              </span>
+            <blockquote className="font-quote text-2xl md:text-3xl italic text-center max-w-4xl mx-auto mb-8">
+              "In the end, all paths converge. The buyer chooses their journey, but both lead to the same sacred moment—the decision to transform their reality."
+            </blockquote>
+            
+            <cite className="font-quote text-lg text-muted-foreground">
+              — Miguel, at the convergence of all funnels
+            </cite>
+          </div>
+          
+          {/* Dual CTA Blocks */}
+          <div className="flex flex-col gap-16 max-w-2xl mx-auto">
+            {/* Ice Mode CTA Block */}
+            <div className="group relative p-10 rounded-2xl bg-gradient-to-br from-ice/20 via-ice-secondary/10 to-ice/30 border border-ice/20 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] transition-all duration-500 hover:scale-[1.02]">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl opacity-50" />
+              <div className="relative z-10">
+                <div className="font-quote text-xl md:text-2xl italic text-foreground mb-6 leading-relaxed">
+                  "Miguel carved this relic in silence. Every scroll is a whisper of trust."
+                </div>
+                <Button 
+                  size="lg"
+                  className="bg-white text-ice-secondary font-semibold px-8 py-4 text-lg rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:bg-ice-surface transition-all duration-300"
+                >
+                  Deploy With Clarity
+                </Button>
+              </div>
+            </div>
+
+            {/* Fire Mode CTA Block */}
+            <div className="group relative p-10 rounded-2xl bg-gradient-to-br from-fire/30 via-fire-secondary/20 to-fire/40 border border-fire/30 backdrop-blur-sm shadow-[0_0_30px_rgba(249,115,22,0.15)] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)] transition-all duration-500 hover:scale-[1.02]">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-2xl opacity-80" />
+              <div className="relative z-10">
+                <div className="font-quote text-xl md:text-2xl italic text-foreground mb-6 leading-relaxed">
+                  "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
+                </div>
+                <Button 
+                  size="lg"
+                  className="bg-fire-secondary text-fire-surface font-semibold px-8 py-4 text-lg rounded-lg shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:bg-fire transition-all duration-300"
+                >
+                  Deploy With Urgency
+                </Button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Ceremonial Final CTA */}
+          <div className="mt-20 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8">
+              <span className="block mb-2">The Gallery Awaits</span>
+              <span className="block text-primary">Choose Your Relic</span>
             </h2>
             
-            <div className="max-w-3xl mx-auto mb-12">
-              <blockquote className="font-quote text-xl md:text-2xl italic text-center border-l-0 bg-card/30 backdrop-blur-sm rounded-lg p-8">
-                "Every master knows: the buyer doesn't choose the template. 
-                The template chooses the buyer. You merely provide both altars."
-              </blockquote>
-              <cite className="text-muted-foreground mt-4 block">— Miguel, on the Sacred Commerce</cite>
-            </div>
-            
-            <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Join the architects of desire. Those who understand that true conversion 
-              isn't about selling—it's about creating the space where purchase becomes inevitable.
+            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Two templates. One destiny. Your customers' hearts beat in both rhythms—honor them both.
             </p>
             
-            {/* Trust Elements */}
-            <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                <span>Stripe-ready checkout</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                <span>Instant access</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                <span>Mobile-optimized</span>
-              </div>
-            </div>
-            
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-              <Button variant="premium" size="xl" className="min-w-[220px] font-semibold">
+            {/* Ceremonial CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+              <Button 
+                variant="default" 
+                size="xl" 
+                className="px-12 py-6 text-xl font-semibold animate-ceremonial-rise"
+              >
                 Step Into the Gallery
               </Button>
               
-              <Button variant="duality" size="xl" className="min-w-[260px] font-semibold">
-                Claim the Dual Relics
-                <span className="ml-2 font-bold">A$297</span>
+              <Button 
+                variant="outline" 
+                size="xl" 
+                className="px-12 py-6 text-xl font-semibold border-2 animate-sacred-glow"
+              >
+                Claim the Dual Relics A$297
               </Button>
             </div>
             
-            <div className="text-center space-y-2">
-              <p className="text-sm text-muted-foreground">
-                No friction. No hesitation. Only the sacred transaction.
-              </p>
-              <p className="font-quote italic text-xs text-muted-foreground/70">
-                "Miguel's chamber awaits. The templates choose you."
-              </p>
+            {/* Trust Elements */}
+            <div className="flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4" />
+                <span>30-Day Money Back Guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4" />
+                <span>Instant Digital Delivery</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                <span>Lifetime Updates Included</span>
+              </div>
             </div>
           </div>
         </div>
