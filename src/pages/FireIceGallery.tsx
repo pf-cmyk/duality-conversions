@@ -56,7 +56,7 @@ const FireIceGallery = () => {
           </Badge>
           
           {/* Main Headline */}
-          <h1 className="font-quote text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="font-quote text-5xl md:text-7xl font-bold mb-6 leading-tight">
             <span className="block">In <span className="text-fire">fire</span>, we find urgency.</span>
             <span className="block">In <span className="text-ice">ice</span>, we discover clarity.</span>
             <span className="block text-primary">In both, we claim victory.</span>
@@ -66,6 +66,14 @@ const FireIceGallery = () => {
           <p className="font-quote italic text-xl md:text-2xl text-muted-foreground mb-8">
             — Miguel, between flame and frost
           </p>
+          
+          {/* Ceremonial Quote */}
+          <div className="max-w-2xl mx-auto mb-12">
+            <blockquote className="font-quote text-lg md:text-xl italic text-center border-l-0 bg-card/30 backdrop-blur-sm rounded-lg p-6">
+              "The buyer's heart beats in two rhythms—one urgent, one serene. 
+              A master builder creates both chambers."
+            </blockquote>
+          </div>
           
           {/* Miguel Silhouette */}
           <div className="mb-12 animate-float">
@@ -85,17 +93,17 @@ const FireIceGallery = () => {
                   variant="fire" 
                   size="xl" 
                   onClick={() => setCurrentMode('fire')}
-                  className="min-w-[200px]"
+                  className="min-w-[200px] font-semibold"
                 >
-                  🔥 Activate Fire Mode
+                  🔥 Step Into the Flames
                 </Button>
                 <Button 
                   variant="ice" 
                   size="xl" 
                   onClick={() => setCurrentMode('ice')}
-                  className="min-w-[200px]"
+                  className="min-w-[200px] font-semibold"
                 >
-                  ❄️ Activate Ice Mode
+                  ❄️ Enter the Sanctuary
                 </Button>
               </div>
             </div>
@@ -201,11 +209,11 @@ const FireIceGallery = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="fire" size="lg" className="pulse">
-                        🔥 CLAIM NOW - 50% OFF
+                      <Button variant="fire" size="lg" className="pulse font-semibold">
+                        🔥 Deploy With Urgency
                       </Button>
-                      <Button variant="fire-outline" size="lg">
-                        Only 12 Left!
+                      <Button variant="fire-outline" size="lg" className="font-semibold">
+                        Claim the Heat • A$297
                       </Button>
                     </div>
                   </div>
@@ -340,11 +348,11 @@ const FireIceGallery = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button variant="ice" size="lg">
-                        ❄️ Experience Serenity
+                      <Button variant="ice" size="lg" className="font-semibold">
+                        ❄️ Deploy With Clarity
                       </Button>
-                      <Button variant="ice-outline" size="lg">
-                        Risk-Free Trial
+                      <Button variant="ice-outline" size="lg" className="font-semibold">
+                        Enter the Sanctuary • A$297
                       </Button>
                     </div>
                   </div>
@@ -474,23 +482,23 @@ const FireIceGallery = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {/* Framework Items */}
-            <Card className="border-fire/20 hover:shadow-fire transition-all duration-300">
+            <Card className="border-fire/20 hover:shadow-fire transition-all duration-300 ceremonial-card animate-ceremonial-rise">
               <CardContent className="p-6">
-                <Flame className="w-12 h-12 text-fire mb-4" />
+                <Flame className="w-12 h-12 text-fire mb-4 animate-glow-pulse" />
                 <h3 className="text-xl font-semibold mb-3">Fire Template</h3>
                 <p className="text-muted-foreground">Complete urgency-driven funnel with psychological triggers</p>
               </CardContent>
             </Card>
             
-            <Card className="border-ice/20 hover:shadow-ice transition-all duration-300">
+            <Card className="border-ice/20 hover:shadow-ice transition-all duration-300 ceremonial-card animate-ceremonial-rise">
               <CardContent className="p-6">
-                <Snowflake className="w-12 h-12 text-ice mb-4" />
+                <Snowflake className="w-12 h-12 text-ice mb-4 animate-ice-pulse" />
                 <h3 className="text-xl font-semibold mb-3">Ice Template</h3>
                 <p className="text-muted-foreground">Minimalist clarity-focused design with trust optimization</p>
               </CardContent>
             </Card>
             
-            <Card className="border-primary/20 hover:shadow-premium transition-all duration-300">
+            <Card className="border-primary/20 hover:shadow-premium transition-all duration-300 ceremonial-card animate-ceremonial-rise hover-sacred">
               <CardContent className="p-6">
                 <Zap className="w-12 h-12 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Conversion Framework</h3>
@@ -498,7 +506,7 @@ const FireIceGallery = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-fire/20 hover:shadow-fire transition-all duration-300">
+            <Card className="border-fire/20 hover:shadow-fire transition-all duration-300 ceremonial-card animate-ceremonial-rise">
               <CardContent className="p-6">
                 <Clock className="w-12 h-12 text-fire mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Scroll Pacing Logic</h3>
@@ -506,7 +514,7 @@ const FireIceGallery = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-ice/20 hover:shadow-ice transition-all duration-300">
+            <Card className="border-ice/20 hover:shadow-ice transition-all duration-300 ceremonial-card animate-ceremonial-rise">
               <CardContent className="p-6">
                 <TrendingUp className="w-12 h-12 text-ice mb-4" />
                 <h3 className="text-xl font-semibold mb-3">CTA Placement Strategy</h3>
@@ -514,7 +522,7 @@ const FireIceGallery = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-primary/20 hover:shadow-premium transition-all duration-300">
+            <Card className="border-primary/20 hover:shadow-premium transition-all duration-300 ceremonial-card animate-ceremonial-rise hover-sacred">
               <CardContent className="p-6">
                 <Star className="w-12 h-12 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-3">Miguel's Ceremonial Code</h3>
@@ -545,19 +553,27 @@ const FireIceGallery = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <Badge variant="outline" className="mb-8 text-lg px-6 py-3 bg-card/50 backdrop-blur-sm">
-              Final Decision Point
+              The Ceremonial Chamber
             </Badge>
             
             <h2 className="font-quote text-4xl md:text-6xl font-bold mb-8">
-              This is not a choice.{" "}
+              This is not a purchase.{" "}
               <span className="bg-gradient-to-r from-fire to-ice bg-clip-text text-transparent">
-                It's a tension worth mastering.
+                It's an initiation into mastery.
               </span>
             </h2>
             
-            <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Join the elite ranks of conversion masters who understand that true power 
-              lies not in choosing a side, but in mastering both forces.
+            <div className="max-w-3xl mx-auto mb-12">
+              <blockquote className="font-quote text-xl md:text-2xl italic text-center border-l-0 bg-card/30 backdrop-blur-sm rounded-lg p-8">
+                "Every master knows: the buyer doesn't choose the template. 
+                The template chooses the buyer. You merely provide both altars."
+              </blockquote>
+              <cite className="text-muted-foreground mt-4 block">— Miguel, on the Sacred Commerce</cite>
+            </div>
+            
+            <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Join the architects of desire. Those who understand that true conversion 
+              isn't about selling—it's about creating the space where purchase becomes inevitable.
             </p>
             
             {/* Trust Elements */}
@@ -577,20 +593,25 @@ const FireIceGallery = () => {
             </div>
             
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Button variant="premium" size="xl" className="min-w-[200px]">
-                Preview the Gallery
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
+              <Button variant="premium" size="xl" className="min-w-[220px] font-semibold">
+                Step Into the Gallery
               </Button>
               
-              <Button variant="duality" size="xl" className="min-w-[240px]">
-                Claim the Dual Templates
+              <Button variant="duality" size="xl" className="min-w-[260px] font-semibold">
+                Claim the Dual Relics
                 <span className="ml-2 font-bold">A$297</span>
               </Button>
             </div>
             
-            <p className="mt-8 text-sm text-muted-foreground">
-              No dead links. No friction. Pure conversion mastery.
-            </p>
+            <div className="text-center space-y-2">
+              <p className="text-sm text-muted-foreground">
+                No friction. No hesitation. Only the sacred transaction.
+              </p>
+              <p className="font-quote italic text-xs text-muted-foreground/70">
+                "Miguel's chamber awaits. The templates choose you."
+              </p>
+            </div>
           </div>
         </div>
       </section>
