@@ -11,6 +11,25 @@ const FireIceGallery = () => {
   const [currentMode, setCurrentMode] = useState<'fire' | 'ice' | null>(null);
   const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); // 24 hours in seconds
 
+  // Dynamic content based on mode
+  const getCaption = () => {
+    if (currentMode === 'fire') {
+      return "He once launched a funnel so hot, the pixels melted. But the conversions stayed.";
+    } else if (currentMode === 'ice') {
+      return "Miguel carved this relic in silence. Every scroll is a whisper of trust.";
+    }
+    return "Choose your path to witness Miguel's wisdom unfold.";
+  };
+
+  const getCTAText = () => {
+    if (currentMode === 'fire') {
+      return "Deploy With Urgency";
+    } else if (currentMode === 'ice') {
+      return "Deploy With Clarity";
+    }
+    return "Enter the Gallery";
+  };
+
   // Countdown timer for Fire mode
   useEffect(() => {
     if (currentMode === 'fire' && timeLeft > 0) {
@@ -34,7 +53,13 @@ const FireIceGallery = () => {
     { name: "Elena Kostas", role: "SaaS Founder", text: "The ice template built trust with my B2B clients like nothing else could." }
   ];
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`min-h-screen transition-all duration-500 ${
+      currentMode === 'fire' 
+        ? 'bg-gradient-to-br from-fire/20 via-fire-secondary/10 to-fire/30' 
+        : currentMode === 'ice' 
+          ? 'bg-gradient-to-br from-ice/20 via-ice-secondary/10 to-ice/30'
+          : 'bg-background'
+    }`}>
       {/* Hero Section: Between Flame and Frost */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background Image */}
@@ -69,9 +94,14 @@ const FireIceGallery = () => {
           
           {/* Ceremonial Quote */}
           <div className="max-w-2xl mx-auto mb-12">
-            <blockquote className="font-quote text-lg md:text-xl italic text-center border-l-0 bg-card/30 backdrop-blur-sm rounded-lg p-6">
-              "The buyer's heart beats in two rhythms—one urgent, one serene. 
-              A master builder creates both chambers."
+            <blockquote className={`font-quote text-lg md:text-xl italic text-center border-l-0 backdrop-blur-sm rounded-lg p-6 transition-all duration-500 ${
+              currentMode === 'fire' 
+                ? 'bg-fire/10 border border-fire/20 text-fire-surface-foreground' 
+                : currentMode === 'ice' 
+                  ? 'bg-ice/10 border border-ice/20 text-ice-surface-foreground'
+                  : 'bg-card/30'
+            }`}>
+              {getCaption()}
             </blockquote>
           </div>
           
@@ -566,15 +596,26 @@ const FireIceGallery = () => {
           {/* Dual CTA Blocks */}
           <div className="flex flex-col gap-16 max-w-2xl mx-auto">
             {/* Ice Mode CTA Block */}
-            <div className="group relative p-10 rounded-2xl bg-gradient-to-br from-ice/20 via-ice-secondary/10 to-ice/30 border border-ice/20 backdrop-blur-sm shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_40px_rgba(59,130,246,0.25)] transition-all duration-500 hover:scale-[1.02]">
+            <div className={`group relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${
+              currentMode === 'ice' 
+                ? 'bg-gradient-to-br from-ice/40 via-ice-secondary/20 to-ice/50 border-ice/30 shadow-[0_0_40px_rgba(59,130,246,0.25)]'
+                : 'bg-gradient-to-br from-ice/20 via-ice-secondary/10 to-ice/30 border-ice/20 shadow-[0_0_30px_rgba(59,130,246,0.15)]'
+            } border hover:shadow-[0_0_40px_rgba(59,130,246,0.25)]`}>
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl opacity-50" />
               <div className="relative z-10">
-                <div className="font-quote text-xl md:text-2xl italic text-foreground mb-6 leading-relaxed">
+                <div className={`font-quote text-xl md:text-2xl italic mb-6 leading-relaxed transition-all duration-300 ${
+                  currentMode === 'ice' ? 'text-ice-surface-foreground' : 'text-foreground'
+                }`}>
                   "Miguel carved this relic in silence. Every scroll is a whisper of trust."
                 </div>
                 <Button 
                   size="lg"
-                  className="bg-white text-ice-secondary font-semibold px-8 py-4 text-lg rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:bg-ice-surface transition-all duration-300"
+                  onClick={() => setCurrentMode('ice')}
+                  className={`font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 ${
+                    currentMode === 'ice' 
+                      ? 'bg-white text-ice-secondary shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:bg-ice-surface' 
+                      : 'bg-white text-ice-secondary shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:bg-ice-surface'
+                  }`}
                 >
                   Deploy With Clarity
                 </Button>
@@ -582,15 +623,26 @@ const FireIceGallery = () => {
             </div>
 
             {/* Fire Mode CTA Block */}
-            <div className="group relative p-10 rounded-2xl bg-gradient-to-br from-fire/30 via-fire-secondary/20 to-fire/40 border border-fire/30 backdrop-blur-sm shadow-[0_0_30px_rgba(249,115,22,0.15)] hover:shadow-[0_0_40px_rgba(249,115,22,0.25)] transition-all duration-500 hover:scale-[1.02]">
+            <div className={`group relative p-10 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:scale-[1.02] ${
+              currentMode === 'fire'
+                ? 'bg-gradient-to-br from-fire/50 via-fire-secondary/30 to-fire/60 border-fire/40 shadow-[0_0_40px_rgba(249,115,22,0.25)]'
+                : 'bg-gradient-to-br from-fire/30 via-fire-secondary/20 to-fire/40 border-fire/30 shadow-[0_0_30px_rgba(249,115,22,0.15)]'
+            } border hover:shadow-[0_0_40px_rgba(249,115,22,0.25)]`}>
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-2xl opacity-80" />
               <div className="relative z-10">
-                <div className="font-quote text-xl md:text-2xl italic text-foreground mb-6 leading-relaxed">
+                <div className={`font-quote text-xl md:text-2xl italic mb-6 leading-relaxed transition-all duration-300 ${
+                  currentMode === 'fire' ? 'text-fire-surface-foreground' : 'text-foreground'
+                }`}>
                   "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
                 </div>
                 <Button 
                   size="lg"
-                  className="bg-fire-secondary text-fire-surface font-semibold px-8 py-4 text-lg rounded-lg shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:bg-fire transition-all duration-300"
+                  onClick={() => setCurrentMode('fire')}
+                  className={`font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 ${
+                    currentMode === 'fire'
+                      ? 'bg-fire-secondary text-fire-surface shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:bg-fire'
+                      : 'bg-fire-secondary text-fire-surface shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:bg-fire'
+                  }`}
                 >
                   Deploy With Urgency
                 </Button>
