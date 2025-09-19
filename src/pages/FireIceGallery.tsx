@@ -608,17 +608,16 @@ const FireIceGallery = () => {
                 }`}>
                   "Miguel carved this relic in silence. Every scroll is a whisper of trust."
                 </div>
-                <Button 
-                  size="lg"
+                <div 
                   onClick={() => setCurrentMode('ice')}
-                  className={`font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 ${
+                  className={`inline-block cursor-pointer font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 opacity-80 hover:opacity-100 ${
                     currentMode === 'ice' 
-                      ? 'bg-white text-ice-secondary shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:bg-ice-surface' 
-                      : 'bg-white text-ice-secondary shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:bg-ice-surface'
+                      ? 'bg-white text-ice-secondary shadow-[0_0_20px_rgba(59,130,246,0.4)]' 
+                      : 'bg-white text-ice-secondary shadow-[0_0_15px_rgba(59,130,246,0.3)]'
                   }`}
                 >
                   Deploy With Clarity
-                </Button>
+                </div>
               </div>
             </div>
 
@@ -635,19 +634,25 @@ const FireIceGallery = () => {
                 }`}>
                   "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
                 </div>
-                <Button 
-                  size="lg"
+                <div 
                   onClick={() => setCurrentMode('fire')}
-                  className={`font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 ${
+                  className={`inline-block cursor-pointer font-semibold px-8 py-4 text-lg rounded-lg transition-all duration-300 opacity-80 hover:opacity-100 ${
                     currentMode === 'fire'
-                      ? 'bg-fire-secondary text-fire-surface shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:bg-fire'
-                      : 'bg-fire-secondary text-fire-surface shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:bg-fire'
+                      ? 'bg-fire-secondary text-fire-surface shadow-[0_0_20px_rgba(249,115,22,0.4)]'
+                      : 'bg-fire-secondary text-fire-surface shadow-[0_0_15px_rgba(249,115,22,0.3)]'
                   }`}
                 >
                   Deploy With Urgency
-                </Button>
+                </div>
               </div>
             </div>
+          </div>
+          
+          {/* Mystical Note */}
+          <div className="mt-16 max-w-xl mx-auto">
+            <p className="font-quote text-lg italic opacity-60 transition-all duration-500">
+              The relics await in Miguel's palace. Only those who feel the call will find the chamber.
+            </p>
           </div>
           
           {/* Ceremonial Final CTA */}
