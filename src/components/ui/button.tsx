@@ -15,11 +15,22 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        
+        // Fire & Ice Premium Variants
+        fire: "bg-fire text-white shadow-fire hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-fire/20 font-semibold",
+        ice: "bg-ice text-white shadow-ice hover:shadow-lg hover:scale-[1.02] transition-all duration-300 border border-ice/20 font-semibold", 
+        "fire-outline": "border-2 border-fire bg-fire/5 text-fire hover:bg-fire hover:text-white transition-all duration-300 font-semibold",
+        "ice-outline": "border-2 border-ice bg-ice/5 text-ice hover:bg-ice hover:text-white transition-all duration-300 font-semibold",
+        "fire-ghost": "text-fire hover:bg-fire/10 hover:text-fire font-medium",
+        "ice-ghost": "text-ice hover:bg-ice/10 hover:text-ice font-medium",
+        duality: "bg-gradient-to-r from-fire to-ice text-white shadow-premium hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-bold",
+        premium: "bg-gradient-to-r from-fire/20 to-ice/20 border border-primary/20 text-foreground hover:from-fire/30 hover:to-ice/30 hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-12 rounded-lg px-12 text-lg font-bold",
         icon: "h-10 w-10",
       },
     },

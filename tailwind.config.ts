@@ -19,6 +19,23 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        
+        // Fire & Ice System
+        fire: {
+          DEFAULT: "hsl(var(--fire-primary))",
+          secondary: "hsl(var(--fire-secondary))",
+          accent: "hsl(var(--fire-accent))",
+          surface: "hsl(var(--fire-surface))",
+          "surface-foreground": "hsl(var(--fire-surface-foreground))",
+        },
+        ice: {
+          DEFAULT: "hsl(var(--ice-primary))",
+          secondary: "hsl(var(--ice-secondary))",
+          accent: "hsl(var(--ice-accent))",
+          surface: "hsl(var(--ice-surface))",
+          "surface-foreground": "hsl(var(--ice-surface-foreground))",
+        },
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -57,6 +74,20 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        quote: ["Playfair Display", "serif"],
+        body: ["Inter", "sans-serif"],
+      },
+      backgroundImage: {
+        "gradient-fire": "var(--gradient-fire)",
+        "gradient-ice": "var(--gradient-ice)",
+        "gradient-divide": "var(--gradient-divide)",
+      },
+      boxShadow: {
+        fire: "var(--shadow-fire)",
+        ice: "var(--shadow-ice)",
+        premium: "var(--shadow-premium)",
       },
       borderRadius: {
         lg: "var(--radius)",
