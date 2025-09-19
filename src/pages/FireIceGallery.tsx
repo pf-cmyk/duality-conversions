@@ -1,12 +1,38 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import heroImage from "@/assets/fire-ice-hero.jpg";
 import miguelSilhouette from "@/assets/miguel-silhouette.jpg";
-import { Flame, Snowflake, Zap, Shield, Clock, TrendingUp, Users, Star } from "lucide-react";
+import { Flame, Snowflake, Zap, Shield, Clock, TrendingUp, Users, Star, Timer, Award, CheckCircle } from "lucide-react";
 
 const FireIceGallery = () => {
+  const [currentMode, setCurrentMode] = useState<'fire' | 'ice' | null>(null);
+  const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); // 24 hours in seconds
+
+  // Countdown timer for Fire mode
+  useEffect(() => {
+    if (currentMode === 'fire' && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [currentMode, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const testimonials = [
+    { name: "Sarah Chen", role: "E-commerce Owner", text: "This framework doubled my conversion rate overnight. The psychological insights are incredible." },
+    { name: "Marcus Rivera", role: "Digital Marketer", text: "Miguel's dual approach is genius. Now I match the template to my audience's energy." },
+    { name: "Elena Kostas", role: "SaaS Founder", text: "The ice template built trust with my B2B clients like nothing else could." }
+  ];
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section: Between Flame and Frost */}
@@ -50,12 +76,48 @@ const FireIceGallery = () => {
             />
           </div>
           
-          {/* Hero CTA */}
-          <Button variant="duality" size="xl" className="mb-4">
-            🔥 Embrace the Tension ❄️
-          </Button>
-          
-          <p className="text-muted-foreground">Choose your path below</p>
+          {/* Hero CTA - Mode Selection */}
+          {!currentMode ? (
+            <div className="space-y-6">
+              <p className="text-xl text-muted-foreground mb-8">Choose your conversion path</p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  variant="fire" 
+                  size="xl" 
+                  onClick={() => setCurrentMode('fire')}
+                  className="min-w-[200px]"
+                >
+                  🔥 Activate Fire Mode
+                </Button>
+                <Button 
+                  variant="ice" 
+                  size="xl" 
+                  onClick={() => setCurrentMode('ice')}
+                  className="min-w-[200px]"
+                >
+                  ❄️ Activate Ice Mode
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <Badge variant="outline" className={`text-lg px-6 py-2 backdrop-blur-sm ${
+                currentMode === 'fire' ? 'border-fire text-fire bg-fire/10' : 'border-ice text-ice bg-ice/10'
+              }`}>
+                {currentMode === 'fire' ? '🔥 Fire Mode Activated' : '❄️ Ice Mode Activated'}
+              </Badge>
+              
+              <Button 
+                variant="outline" 
+                onClick={() => setCurrentMode(null)}
+                className="backdrop-blur-sm"
+              >
+                Switch Mode
+              </Button>
+            </div>
+          )}
+
+          <p className="text-muted-foreground mt-6">Scroll down to experience your chosen path</p>
         </div>
         
         {/* Scroll Indicator */}
@@ -66,157 +128,331 @@ const FireIceGallery = () => {
         </div>
       </section>
 
-      {/* Section 1: Path of Fire */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Fire Background Glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-fire/5 to-transparent" />
-        <div className="absolute left-0 top-1/2 w-96 h-96 bg-fire/20 rounded-full blur-3xl transform -translate-y-1/2 -translate-x-1/2" />
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Content */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <Flame className="w-8 h-8 text-fire animate-glow-pulse" />
-                <Badge variant="outline" className="border-fire text-fire">Path of Fire</Badge>
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="text-fire">Passion.</span>{" "}
-                <span className="text-fire">Urgency.</span>{" "}
-                <span className="text-primary">Conversion heat.</span>
-              </h2>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <Clock className="w-6 h-6 text-fire mt-1" />
+      {/* Conditional Path Section */}
+      {currentMode && (
+        <section className="py-24 relative overflow-hidden">
+          {/* Dynamic Background Glow */}
+          <div className={`absolute inset-0 ${
+            currentMode === 'fire' 
+              ? 'bg-gradient-to-r from-fire/5 to-transparent' 
+              : 'bg-gradient-to-l from-ice/5 to-transparent'
+          }`} />
+          <div className={`absolute ${
+            currentMode === 'fire' ? 'left-0' : 'right-0'
+          } top-1/2 w-96 h-96 ${
+            currentMode === 'fire' ? 'bg-fire/20' : 'bg-ice/20'
+          } rounded-full blur-3xl transform -translate-y-1/2 ${
+            currentMode === 'fire' ? '-translate-x-1/2' : 'translate-x-1/2'
+          }`} />
+          
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Fire Mode Content */}
+              {currentMode === 'fire' && (
+                <>
                   <div>
-                    <h3 className="font-semibold mb-2">Urgency-driven Layout</h3>
-                    <p className="text-muted-foreground">Countdown timers, scarcity triggers that accelerate decision-making</p>
+                    <div className="flex items-center gap-4 mb-6">
+                      <Flame className="w-8 h-8 text-fire animate-glow-pulse" />
+                      <Badge variant="outline" className="border-fire text-fire">🔥 Fire Mode Active</Badge>
+                    </div>
+                    
+                    {/* Countdown Timer */}
+                    <div className="bg-fire/10 border border-fire/20 rounded-lg p-6 mb-8">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Timer className="w-6 h-6 text-fire" />
+                        <span className="font-semibold text-fire">Limited Time Offer</span>
+                      </div>
+                      <div className="text-3xl font-bold text-fire font-mono">
+                        {formatTime(timeLeft)}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2">This deal expires soon!</p>
+                    </div>
+                    
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                      <span className="text-fire">Passion.</span>{" "}
+                      <span className="text-fire">Urgency.</span>{" "}
+                      <span className="text-primary">Conversion heat.</span>
+                    </h2>
+                    
+                    <div className="space-y-6 mb-8">
+                      <div className="flex items-start gap-4">
+                        <Clock className="w-6 h-6 text-fire mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">⚡ Scarcity-Driven Design</h3>
+                          <p className="text-muted-foreground">Countdown timers and limited availability create immediate action</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-4">
+                        <Zap className="w-6 h-6 text-fire mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">🎯 Aggressive CTA Placement</h3>
+                          <p className="text-muted-foreground">Bold, impossible-to-miss buttons that demand clicks</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-4">
+                        <TrendingUp className="w-6 h-6 text-fire mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">🔥 Accelerated Scroll Pacing</h3>
+                          <p className="text-muted-foreground">Momentum builds as urgency intensifies</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button variant="fire" size="lg" className="pulse">
+                        🔥 CLAIM NOW - 50% OFF
+                      </Button>
+                      <Button variant="fire-outline" size="lg">
+                        Only 12 Left!
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <Zap className="w-6 h-6 text-fire mt-1" />
-                  <div>
-                    <h3 className="font-semibold mb-2">Bold CTA Placement</h3>
-                    <p className="text-muted-foreground">Strategic positioning that demands immediate action</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <TrendingUp className="w-6 h-6 text-fire mt-1" />
-                  <div>
-                    <h3 className="font-semibold mb-2">Accelerated Scroll Pacing</h3>
-                    <p className="text-muted-foreground">Subtly increasing momentum that builds urgency</p>
-                  </div>
-                </div>
-              </div>
+                  
+                  {/* Fire Visual Card */}
+                  <Card className="border-fire/20 bg-fire-surface shadow-fire">
+                    <CardContent className="p-8">
+                      <div className="aspect-video bg-gradient-to-br from-fire to-fire-secondary rounded-lg mb-6 flex items-center justify-center">
+                        <Flame className="w-16 h-16 text-white animate-glow-pulse" />
+                      </div>
+                      
+                      <blockquote className="font-quote italic text-lg text-fire-surface-foreground mb-4">
+                        "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
+                      </blockquote>
+                      
+                      <div className="flex items-center gap-2 text-sm text-fire">
+                        <Star className="w-4 h-4" />
+                        <span>Miguel's Fire Archives</span>
+                      </div>
+                      
+                      {/* Urgency Elements */}
+                      <div className="mt-6 space-y-2">
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="w-2 h-2 bg-fire rounded-full animate-pulse" />
+                          <span>47 people viewing this</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="w-2 h-2 bg-fire rounded-full animate-pulse" />
+                          <span>Last purchase: 3 minutes ago</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </>
+              )}
               
-              <Button variant="fire" size="lg" className="mr-4">
-                Preview Fire Template
-              </Button>
-              <Button variant="fire-outline" size="lg">
-                Learn More
-              </Button>
+              {/* Ice Mode Content */}
+              {currentMode === 'ice' && (
+                <>
+                  {/* Ice Visual Card */}
+                  <Card className="border-ice/20 bg-ice-surface shadow-ice lg:order-1">
+                    <CardContent className="p-8">
+                      <div className="aspect-video bg-gradient-to-br from-ice to-ice-secondary rounded-lg mb-6 flex items-center justify-center">
+                        <Snowflake className="w-16 h-16 text-white animate-ice-pulse" />
+                      </div>
+                      
+                      <blockquote className="font-quote italic text-lg text-ice-surface-foreground mb-4">
+                        "Miguel built this chamber in silence. Every scroll is a whisper of trust."
+                      </blockquote>
+                      
+                      <div className="flex items-center gap-2 text-sm text-ice mb-6">
+                        <Shield className="w-4 h-4" />
+                        <span>Miguel's Ice Sanctuary</span>
+                      </div>
+                      
+                      {/* Trust Badges */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center gap-2 text-xs">
+                          <CheckCircle className="w-4 h-4 text-ice" />
+                          <span>SSL Secured</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          <Award className="w-4 h-4 text-ice" />
+                          <span>99.9% Uptime</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          <Shield className="w-4 h-4 text-ice" />
+                          <span>Money Back</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          <Star className="w-4 h-4 text-ice" />
+                          <span>5.0 Rating</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <div className="lg:order-2">
+                    <div className="flex items-center gap-4 mb-6">
+                      <Snowflake className="w-8 h-8 text-ice animate-ice-pulse" />
+                      <Badge variant="outline" className="border-ice text-ice">❄️ Ice Mode Active</Badge>
+                    </div>
+                    
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                      <span className="text-ice">Clarity.</span>{" "}
+                      <span className="text-ice">Trust.</span>{" "}
+                      <span className="text-primary">Serene conversion.</span>
+                    </h2>
+                    
+                    {/* Testimonials */}
+                    <div className="bg-ice/5 border border-ice/20 rounded-lg p-6 mb-8">
+                      <h3 className="font-semibold mb-4 flex items-center gap-2">
+                        <Users className="w-5 h-5 text-ice" />
+                        What Our Clients Say
+                      </h3>
+                      <div className="space-y-4">
+                        {testimonials.map((testimonial, index) => (
+                          <div key={index} className="border-l-2 border-ice/30 pl-4">
+                            <p className="text-sm italic mb-2">"{testimonial.text}"</p>
+                            <cite className="text-xs text-muted-foreground">
+                              — {testimonial.name}, {testimonial.role}
+                            </cite>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-6 mb-8">
+                      <div className="flex items-start gap-4">
+                        <Shield className="w-6 h-6 text-ice mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">🛡️ Trust-First Layout</h3>
+                          <p className="text-muted-foreground">Security badges and testimonials build confidence</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-4">
+                        <Users className="w-6 h-6 text-ice mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">🚀 Frictionless Experience</h3>
+                          <p className="text-muted-foreground">One-click checkout with zero barriers</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start gap-4">
+                        <Snowflake className="w-6 h-6 text-ice mt-1" />
+                        <div>
+                          <h3 className="font-semibold mb-2">🧘 Calming Progression</h3>
+                          <p className="text-muted-foreground">Gentle pacing that nurtures decision-making</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Button variant="ice" size="lg">
+                        ❄️ Experience Serenity
+                      </Button>
+                      <Button variant="ice-outline" size="lg">
+                        Risk-Free Trial
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            
-            {/* Visual Card */}
-            <Card className="border-fire/20 bg-fire-surface shadow-fire">
-              <CardContent className="p-8">
-                <div className="aspect-video bg-gradient-to-br from-fire to-fire-secondary rounded-lg mb-6 flex items-center justify-center">
-                  <Flame className="w-16 h-16 text-white animate-glow-pulse" />
-                </div>
-                
-                <blockquote className="font-quote italic text-lg text-fire-surface-foreground mb-4">
-                  "He once launched a funnel so hot, the pixels melted. But the conversions stayed."
-                </blockquote>
-                
-                <div className="flex items-center gap-2 text-sm text-fire">
-                  <Star className="w-4 h-4" />
-                  <span>Miguel's Fire Archives</span>
-                </div>
-              </CardContent>
-            </Card>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Section 2: Path of Ice */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Ice Background Glow */}
-        <div className="absolute inset-0 bg-gradient-to-l from-ice/5 to-transparent" />
-        <div className="absolute right-0 top-1/2 w-96 h-96 bg-ice/20 rounded-full blur-3xl transform -translate-y-1/2 translate-x-1/2" />
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Visual Card */}
-            <Card className="border-ice/20 bg-ice-surface shadow-ice lg:order-1">
-              <CardContent className="p-8">
-                <div className="aspect-video bg-gradient-to-br from-ice to-ice-secondary rounded-lg mb-6 flex items-center justify-center">
-                  <Snowflake className="w-16 h-16 text-white animate-ice-pulse" />
-                </div>
+      {/* Deploy Guide Section - Psychology Explanation */}
+      {currentMode && (
+        <section className="py-24 bg-card/30 backdrop-blur-sm">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <Badge variant="outline" className="mb-6 text-lg px-6 py-2">
+                  {currentMode === 'fire' ? '🔥 Fire Psychology' : '❄️ Ice Psychology'}
+                </Badge>
                 
-                <blockquote className="font-quote italic text-lg text-ice-surface-foreground mb-4">
-                  "Miguel built this chamber in silence. Every scroll is a whisper of trust."
-                </blockquote>
+                <h2 className="text-4xl md:text-6xl font-bold mb-6">
+                  The <span className={`${currentMode === 'fire' ? 'text-fire' : 'text-ice'}`}>
+                    {currentMode === 'fire' ? 'Fire' : 'Ice'}
+                  </span> Deploy Guide
+                </h2>
                 
-                <div className="flex items-center gap-2 text-sm text-ice">
-                  <Shield className="w-4 h-4" />
-                  <span>Miguel's Ice Sanctuary</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Content */}
-            <div className="lg:order-2">
-              <div className="flex items-center gap-4 mb-6">
-                <Snowflake className="w-8 h-8 text-ice animate-ice-pulse" />
-                <Badge variant="outline" className="border-ice text-ice">Path of Ice</Badge>
+                <p className="text-xl text-muted-foreground">
+                  Understanding the emotional psychology behind {currentMode === 'fire' ? 'urgency-driven' : 'trust-based'} conversion
+                </p>
               </div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="text-ice">Clarity.</span>{" "}
-                <span className="text-ice">Trust.</span>{" "}
-                <span className="text-primary">Serene conversion.</span>
-              </h2>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <Shield className="w-6 h-6 text-ice mt-1" />
-                  <div>
-                    <h3 className="font-semibold mb-2">Clean Minimalist Layout</h3>
-                    <p className="text-muted-foreground">Trust indicators and testimonials that build confidence</p>
-                  </div>
+
+              {currentMode === 'fire' && (
+                <div className="grid md:grid-cols-2 gap-8">
+                  <Card className="border-fire/20">
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4 text-fire">🎯 When to Use Fire</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• High-ticket, impulse purchases</li>
+                        <li>• Limited-time offers or launches</li>
+                        <li>• Audience that responds to urgency</li>
+                        <li>• Products with clear immediate value</li>
+                        <li>• Flash sales and promotional campaigns</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="border-fire/20">
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4 text-fire">⚡ Fire Psychology</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Creates fear of missing out (FOMO)</li>
+                        <li>• Triggers immediate decision-making</li>
+                        <li>• Bypasses rational overthinking</li>
+                        <li>• Appeals to competitive instincts</li>
+                        <li>• Amplifies perceived value through scarcity</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
                 </div>
-                
-                <div className="flex items-start gap-4">
-                  <Users className="w-6 h-6 text-ice mt-1" />
-                  <div>
-                    <h3 className="font-semibold mb-2">Frictionless Checkout</h3>
-                    <p className="text-muted-foreground">Seamless flow that removes all barriers to purchase</p>
-                  </div>
+              )}
+
+              {currentMode === 'ice' && (
+                <div className="grid md:grid-cols-2 gap-8">
+                  <Card className="border-ice/20">
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4 text-ice">🛡️ When to Use Ice</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• High-consideration purchases</li>
+                        <li>• B2B or professional services</li>
+                        <li>• Trust-sensitive industries</li>
+                        <li>• Long-term customer relationships</li>
+                        <li>• Premium or luxury offerings</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="border-ice/20">
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4 text-ice">🧘 Ice Psychology</h3>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Builds confidence through transparency</li>
+                        <li>• Reduces purchase anxiety</li>
+                        <li>• Appeals to logical decision-making</li>
+                        <li>• Creates lasting trust relationships</li>
+                        <li>• Emphasizes quality over urgency</li>
+                      </ul>
+                    </CardContent>
+                  </Card>
                 </div>
-                
-                <div className="flex items-start gap-4">
-                  <Snowflake className="w-6 h-6 text-ice mt-1" />
-                  <div>
-                    <h3 className="font-semibold mb-2">Calming Scroll Pacing</h3>
-                    <p className="text-muted-foreground">Rhythmic progression that reassures and guides</p>
-                  </div>
-                </div>
-              </div>
-              
-              <Button variant="ice" size="lg" className="mr-4">
-                Preview Ice Template
-              </Button>
-              <Button variant="ice-outline" size="lg">
-                Learn More
-              </Button>
+              )}
+
+              <Card className={`mt-12 bg-gradient-to-r ${
+                currentMode === 'fire' ? 'from-fire/10 to-transparent' : 'from-ice/10 to-transparent'
+              } border-primary/20`}>
+                <CardContent className="p-8 text-center">
+                  <blockquote className="font-quote text-2xl md:text-3xl italic text-foreground mb-4">
+                    {currentMode === 'fire' 
+                      ? "Heat creates urgency. Urgency creates action. Action creates results."
+                      : "Trust is earned in drops and lost in buckets. Every element must whisper reliability."
+                    }
+                  </blockquote>
+                  <cite className="text-muted-foreground">— Miguel, on {currentMode === 'fire' ? 'Fire' : 'Ice'} Psychology</cite>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Section 3: Duality Master Framework */}
       <section className="py-24 bg-card/30 backdrop-blur-sm">
